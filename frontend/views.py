@@ -1,11 +1,16 @@
 from django.shortcuts import render, redirect
 from .forms import EmployeeForm
 from api.models import Employee
+from django.core.paginator import Paginator
 
 
 def index(request):
+    form = Employee.objects.all()
+    paginator = Paginator(form, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context = {
-        'form': Employee.objects.all()
+        'form': form, 'page_obj': page_obj,
     }
     return render(request, 'frontend/index.html', context)
 
