@@ -1,0 +1,47 @@
+{% extends 'frontend/base.html' %}
+{% block content %}
+    <table class="table table-borderless">
+    <thead class="border-bottom font-weight-bold">
+    <tr>
+        <td>Full Name</td>
+        <td>Department Code</td>
+        <td>Phone Number</td>
+        <td><a href="{% url 'insert' %}" class="btn btn-outline-success"><i class="fas fa-plus"></i> Add New</a> </td>
+    </tr>
+    </thead>
+    <tbody>
+{% for employee in page_obj %}
+<tr>
+    <td><a href="{% url 'update' employee.id %}"/>{{ employee.full_name }}</td>
+        <td>{{ employee.dep_code }}</td>
+        <td>{{ employee.phone_number }}</td>
+        <td><a href="{% url 'update' employee.id %}" class="btn text-secondary px-0"> <i class="fas fa-user-edit fa-lg"></i> </a>
+        <form action="{% url "delete" employee.id %}" method="POST" class="d-inline">
+                {% csrf_token %}
+                <button type="submit" class="btn">
+                    <i class="fas fa-ban fa-lg text-danger float-right"></i>
+                </button>
+        </form>
+        </td>
+        </tr>
+{% endfor %}
+    </tbody>
+    </table>
+    <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock %}
