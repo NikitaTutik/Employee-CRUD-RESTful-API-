@@ -12,7 +12,7 @@
     <tbody>
 {% for employee in page_obj %}
 <tr>
-        <td>{{ employee.full_name }}</td>
+    <td><a href="{% url 'update' employee.id %}"/>{{ employee.full_name }}</td>
         <td>{{ employee.dep_code }}</td>
         <td>{{ employee.phone_number }}</td>
         <td><a href="{% url 'update' employee.id %}" class="btn text-secondary px-0"> <i class="fas fa-user-edit fa-lg"></i> </a>

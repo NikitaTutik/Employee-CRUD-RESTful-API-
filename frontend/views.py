@@ -5,7 +5,7 @@ from django.core.paginator import Paginator
 
 
 def index(request):
-    form = Employee.objects.all()
+    form = Employee.objects.order_by('full_name')
     paginator = Paginator(form, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
